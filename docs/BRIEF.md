@@ -26,8 +26,9 @@ A single-page (one-pager) marketing website with a WebGL hero experience.
 1. `#hero` — WebGL canvas + headline + primary CTA
 2. `#services` — what a general contractor does (build, renovate, manage)
 3. `#process` — how a job runs, step by step
-4. `#projects` — visual gallery (placeholder imagery, clearly marked)
-5. `#about` — short positioning statement
+4. ~~`#projects` — visual gallery~~ **removed at client request.** The spec
+   remains in `docs/DESIGN.md`; the markup, styles, and nav/footer links are gone.
+5. `#about` — short positioning statement, with a supporting image
 6. `#contact` — phone, email, address, map-less location block, contact form
 7. `footer`
 

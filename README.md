@@ -81,13 +81,19 @@ Nothing on this site claims a fact that wasn't provided. No invented founding
 year, project count, certifications, testimonials, or awards. Placeholders are
 explicit — see `docs/DESIGN.md` §Copy deck → *Placeholder flags*:
 
-1. Project gallery photography (6 images, 4:3, ≥800×600, <200 KB each)
-2. Project names / locations for each gallery caption
-3. The `#projects` intro copy, once real projects are listed
-4. Map embed or directions link for the contact section
+1. **The About photo.** `public/about.svg` is a placeholder illustration drawn
+   in the brand palette — it is not a photograph of anything. Replace it with a
+   real job-site or completed-project photo: portrait **4:5**, 800×1000
+   minimum (1600×2000 for retina), under ~250 KB. Update the `src` and rewrite
+   the `alt` text in `index.html` to describe the actual photo.
+2. Map embed or directions link for the contact section
 
-Until then, the gallery ships CSS-drawn placeholder tiles — no hotlinked stock
-photos.
+No stock photography is hotlinked anywhere, and no placeholder is presented as
+a real project.
+
+> The `#projects` gallery section was removed at the client's request. Its
+> markup, styles, and copy deck entries are gone; `docs/DESIGN.md` still
+> contains the original spec should it ever come back.
 
 ## Before going live
 
