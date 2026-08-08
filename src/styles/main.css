@@ -1,0 +1,11 @@
+/**
+ * Ital Group — stylesheet entry point.
+ * Import order is a frozen contract (docs/CONTRACTS.md §3). Do not reorder.
+ */
+@import "./tokens.css";
+@import "./reset.css";
+@import "./base.css";
+@import "./layout.css";
+@import "./components.css";
+@import "./sections.css";
+@import "./utilities.css";

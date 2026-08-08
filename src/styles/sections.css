@@ -1,0 +1,204 @@
+/**
+ * Section-specific styling — Ital Group
+ * Backgrounds, the no-WebGL hero fallback, and per-section visual treatment.
+ */
+
+/* ---------- Section background rhythm ---------- */
+
+#hero {
+  background: var(--color-bg);
+}
+
+#services,
+#about {
+  background: var(--color-bg);
+}
+
+#process,
+#projects,
+#contact {
+  background: var(--color-surface);
+  border-block: 1px solid var(--color-border);
+}
+
+.footer {
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ---------- Hero content ---------- */
+
+.hero__eyebrow {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-block-end: var(--space-m);
+}
+
+.hero__heading {
+  color: var(--color-text);
+  margin-block-end: var(--space-m);
+}
+
+.hero__lede {
+  font-size: var(--step-1);
+  color: var(--color-text-muted);
+  max-width: 52ch;
+}
+
+/*
+ * Required hook: [data-webgl="off"] .hero
+ * A genuinely designed CSS-only hero — layered radial/linear gradients
+ * standing in for the WebGL scene's key light + graphite material + fog,
+ * plus a faint architectural grid line motif. No animation dependency,
+ * no external images.
+ */
+[data-webgl="off"] .hero {
+  background-color: var(--color-bg);
+  background-image:
+    /* warm key-light glow, upper right — echoes the WebGL key light */
+    radial-gradient(
+      ellipse 900px 700px at 82% 8%,
+      color-mix(in srgb, var(--color-accent) 22%, transparent) 0%,
+      transparent 60%
+    ),
+    /* cool fill light, lower left */
+    radial-gradient(
+      ellipse 700px 600px at 6% 96%,
+      color-mix(in srgb, #3b4854 45%, transparent) 0%,
+      transparent 65%
+    ),
+    /* faint architectural grid — vertical */
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-border) 55%, transparent) 0,
+      color-mix(in srgb, var(--color-border) 55%, transparent) 1px,
+      transparent 1px,
+      transparent 64px
+    ),
+    /* faint architectural grid — horizontal */
+    repeating-linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--color-border) 55%, transparent) 0,
+      color-mix(in srgb, var(--color-border) 55%, transparent) 1px,
+      transparent 1px,
+      transparent 64px
+    );
+}
+
+[data-webgl="off"] .hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--color-bg) 40%, transparent) 80%,
+    var(--color-bg) 100%
+  );
+}
+
+[data-webgl="off"] .hero__canvas {
+  display: none;
+}
+
+/* ---------- Services ---------- */
+
+#services .service-card {
+  height: 100%;
+}
+
+/* ---------- Process connecting line ---------- */
+
+.process__list {
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .process-step {
+    border-top-color: var(--color-accent);
+  }
+}
+
+/* ---------- Projects ---------- */
+
+.projects__intro {
+  color: var(--color-text-muted);
+  max-width: 60ch;
+  margin-block-start: var(--space-s);
+}
+
+/* ---------- About ---------- */
+
+.about__visual {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  background:
+    radial-gradient(
+      ellipse 500px 400px at 30% 20%,
+      color-mix(in srgb, var(--color-accent) 14%, transparent) 0%,
+      transparent 70%
+    ),
+    repeating-linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-border) 70%, transparent) 0,
+      color-mix(in srgb, var(--color-border) 70%, transparent) 1px,
+      transparent 1px,
+      transparent 22px
+    ),
+    var(--color-surface);
+}
+
+.about__body p + p {
+  margin-block-start: var(--space-m);
+}
+
+.about__body p {
+  color: var(--color-text-muted);
+  max-width: 58ch;
+}
+
+/* ---------- Contact ---------- */
+
+#contact .section__intro {
+  margin-block-end: var(--space-l);
+}
+
+/* ---------- Footer ---------- */
+
+.footer__logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-0);
+}
+
+.footer__link {
+  color: var(--color-text-muted);
+  font-size: var(--step--1);
+}
+
+.footer__link:hover {
+  color: var(--color-text);
+}
+
+.footer__legal {
+  color: var(--color-text-muted);
+  font-size: var(--step--1);
+}
+
+.footer__contact {
+  color: var(--color-text-muted);
+  font-size: var(--step--1);
+}
+
+.footer__contact a:hover {
+  color: var(--color-accent);
+}

@@ -1,0 +1,381 @@
+/**
+ * Reusable components — Ital Group
+ * Buttons, form fields, cards, nav visuals.
+ */
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-s) var(--space-l);
+  border-radius: var(--radius);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-0);
+  line-height: 1;
+  border: 1px solid transparent;
+  transition: background-color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease), color var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  border-color: var(--color-accent);
+}
+
+.btn--primary:hover {
+  background: color-mix(in srgb, var(--color-accent) 88%, white);
+  border-color: color-mix(in srgb, var(--color-accent) 88%, white);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.btn--secondary:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* ---------- Nav visuals ---------- */
+
+.nav__logo {
+  color: var(--color-text);
+}
+
+.nav__link {
+  display: block;
+  padding: var(--space-s) var(--space-m);
+  color: var(--color-text-muted);
+  font-weight: 500;
+  transition: color var(--dur) var(--ease);
+}
+
+.nav__link:hover {
+  color: var(--color-text);
+}
+
+@media (min-width: 768px) {
+  .nav__link {
+    padding: var(--space-2xs) 0;
+  }
+}
+
+.nav__toggle {
+  color: var(--color-text);
+}
+
+.nav__toggle-icon {
+  position: relative;
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+}
+
+.nav__toggle-icon::before,
+.nav__toggle-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  transition: transform var(--dur) var(--ease);
+}
+
+.nav__toggle-icon::before {
+  top: -6px;
+}
+
+.nav__toggle-icon::after {
+  top: 6px;
+}
+
+#nav.is-open .nav__toggle-icon {
+  background: transparent;
+}
+
+#nav.is-open .nav__toggle-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+#nav.is-open .nav__toggle-icon::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* ---------- Cards ---------- */
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-l);
+}
+
+/* ---------- Service cards ---------- */
+
+.service-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-l);
+  transition: border-color var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+}
+
+.service-card:hover {
+  border-color: var(--color-accent);
+}
+
+.service-card__icon {
+  /* Must not stay inline: the <svg> inside carries only a viewBox, so it sizes
+     to its containing block — an inline span leaves that as the whole card. */
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  color: var(--color-accent);
+  margin-block-end: var(--space-m);
+}
+
+.service-card__title {
+  font-size: var(--step-1);
+  margin-block-end: var(--space-xs);
+}
+
+.service-card__body {
+  color: var(--color-text-muted);
+}
+
+/* ---------- Process steps ---------- */
+
+.process-step {
+  position: relative;
+  padding-block-start: var(--space-l);
+  border-top: 2px solid var(--color-border);
+}
+
+.process-step__number {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-1);
+  color: var(--color-accent);
+  margin-block-end: var(--space-s);
+}
+
+.process-step__title {
+  font-size: var(--step-0);
+  font-weight: 700;
+  font-family: var(--font-display);
+  margin-block-end: var(--space-2xs);
+}
+
+.process-step__body {
+  color: var(--color-text-muted);
+  font-size: var(--step--1);
+}
+
+@media (max-width: 767px) {
+  .process-step {
+    padding-inline-start: var(--space-l);
+    padding-block-start: 0;
+    border-top: none;
+    border-left: 2px solid var(--color-border);
+  }
+}
+
+/* ---------- Project tiles ---------- */
+
+.project-tile {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.project-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-tile--placeholder {
+  background-image: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-border) 60%, transparent) 0,
+    color-mix(in srgb, var(--color-border) 60%, transparent) 1px,
+    transparent 1px,
+    transparent 14px
+  );
+}
+
+.project-tile__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-m);
+  text-align: center;
+}
+
+.project-tile__placeholder-label {
+  font-size: var(--step--1);
+  color: var(--color-text-muted);
+}
+
+.project-tile__caption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: var(--space-s) var(--space-m);
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-bg) 85%, transparent),
+    transparent
+  );
+  font-size: var(--step--1);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Contact info block ---------- */
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+}
+
+.contact-info__item {
+  border-left: 2px solid var(--color-accent);
+  padding-inline-start: var(--space-m);
+}
+
+.contact-info__label {
+  display: block;
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-block-end: var(--space-2xs);
+}
+
+.contact-info__value {
+  font-size: var(--step-1);
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+a.contact-info__value:hover {
+  color: var(--color-accent);
+}
+
+.contact-info__note {
+  color: var(--color-text-muted);
+  font-size: var(--step--1);
+  padding-block-start: var(--space-s);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ---------- Forms ---------- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+.form__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.form__label {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.form__input,
+.form__textarea {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-s) var(--space-m);
+  color: var(--color-text);
+  font-size: var(--step-0);
+  transition: border-color var(--dur) var(--ease);
+}
+
+.form__input::placeholder,
+.form__textarea::placeholder {
+  color: var(--color-text-muted);
+  /* 0.7 blends to #7c8087 on --color-surface = 4.26:1, under the 4.5:1 AA
+     floor that placeholder text has to clear. 0.8 = 5.18:1. */
+  opacity: 0.8;
+}
+
+.form__input:focus,
+.form__textarea:focus {
+  border-color: var(--color-accent);
+}
+
+.form__textarea {
+  min-height: 9rem;
+  resize: vertical;
+}
+
+/* Required hook: invalid form fields */
+.form__input[aria-invalid="true"],
+.form__textarea[aria-invalid="true"] {
+  border-color: var(--color-error);
+}
+
+.form__input[aria-invalid="true"]:focus,
+.form__textarea[aria-invalid="true"]:focus {
+  outline-color: var(--color-error);
+}
+
+/* Required hook: field-level error message */
+.field-error {
+  color: var(--color-error);
+  font-size: var(--step--1);
+}
+
+.form__status {
+  font-size: var(--step--1);
+  padding: var(--space-s) var(--space-m);
+  border-radius: var(--radius);
+  display: none;
+}
+
+.form__status[data-state="success"] {
+  display: block;
+  background: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  color: var(--color-text);
+  border: 1px solid var(--color-accent);
+}
+
+.form__status[data-state="error"] {
+  display: block;
+  background: color-mix(in srgb, var(--color-error) 16%, transparent);
+  color: var(--color-text);
+  border: 1px solid var(--color-error);
+}

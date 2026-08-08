@@ -1,0 +1,53 @@
+/**
+ * Design tokens — Ital Group
+ * Single source of truth for colour, type, space, radius, shadow, motion.
+ * See docs/DESIGN.md for rationale and contrast measurements.
+ */
+
+:root {
+  /* ---------- Colour — dark-first, single accent ---------- */
+  --color-bg: #121316;
+  --color-surface: #1b1d21;
+  --color-surface-raised: #212327;
+  --color-text: #f3f1ec;
+  --color-text-muted: #a6abb3;
+  --color-accent: #c9a24b;
+  --color-accent-contrast: #14151a;
+  --color-border: #2b2e33;
+  --color-error: #e5646b;
+
+  /* ---------- Type ---------- */
+  --font-display: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-body: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+  /* Fluid type scale — clamp(min @360px, fluid, max @1440px) */
+  --step--1: clamp(0.8rem, 0.77rem + 0.16vw, 0.9rem);
+  --step-0: clamp(1rem, 0.95rem + 0.24vw, 1.15rem);
+  --step-1: clamp(1.25rem, 1.16rem + 0.43vw, 1.5rem);
+  --step-2: clamp(1.56rem, 1.42rem + 0.72vw, 2rem);
+  --step-3: clamp(1.95rem, 1.72rem + 1.16vw, 2.65rem);
+  --step-4: clamp(2.44rem, 2.06rem + 1.88vw, 3.5rem);
+
+  --line-height-tight: 1.1;
+  --line-height-heading: 1.2;
+  --line-height-body: 1.6;
+
+  /* ---------- Space ---------- */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-s: 0.75rem;
+  --space-m: 1.25rem;
+  --space-l: 2rem;
+  --space-xl: 3.25rem;
+  --space-2xl: 5.25rem;
+
+  /* ---------- Shape / elevation / motion ---------- */
+  --radius: 4px;
+  --shadow: 0 12px 32px -12px rgb(0 0 0 / 0.5);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 240ms;
+
+  /* ---------- Layout ---------- */
+  --container-max: 1200px;
+  --nav-height: 68px;
+}

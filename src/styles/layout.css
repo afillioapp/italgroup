@@ -1,0 +1,348 @@
+/**
+ * Structural layout — Ital Group
+ * Container, grid system, section rhythm, nav/hero/footer skeleton.
+ * Mobile-first: base rules are the 360px layout, breakpoints add columns.
+ */
+
+/* ---------- Container ---------- */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-m);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-inline: var(--space-l);
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    padding-inline: var(--space-xl);
+  }
+}
+
+/* ---------- Grid ---------- */
+
+.grid {
+  display: grid;
+  gap: var(--space-l);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .grid--12 {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+
+/* ---------- Section rhythm ---------- */
+
+.section {
+  padding-block: var(--space-2xl);
+}
+
+.section__eyebrow {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-block-end: var(--space-xs);
+}
+
+.section__heading {
+  max-width: 44ch;
+}
+
+.section__intro {
+  max-width: 60ch;
+  color: var(--color-text-muted);
+  font-size: var(--step-1);
+  margin-block-start: var(--space-s);
+}
+
+.section__head {
+  margin-block-end: var(--space-l);
+}
+
+@media (min-width: 1024px) {
+  .section__head {
+    margin-block-end: var(--space-xl);
+  }
+}
+
+/* ---------- Skip link ---------- */
+
+.skip-link {
+  /* Fixed, not absolute: absolute positions against the initial containing
+     block, so a skip link focused after any scrolling would slide up to
+     document-top and land off-screen — invisible exactly when it is needed. */
+  position: fixed;
+  top: -100%;
+  left: var(--space-m);
+  z-index: 100;
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  padding: var(--space-xs) var(--space-m);
+  border-radius: var(--radius);
+  font-weight: 700;
+  transition: top var(--dur) var(--ease);
+}
+
+.skip-link:focus {
+  top: var(--space-m);
+}
+
+/* Anchor targets clear the sticky nav — without this, jumping to a section
+   parks its heading underneath the bar. */
+:where(section[id], #main, [id]:target) {
+  scroll-margin-top: calc(var(--nav-height) + var(--space-s));
+}
+
+/* ---------- Nav ---------- */
+
+#nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  min-height: var(--nav-height);
+}
+
+.nav__logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-0);
+  letter-spacing: 0.01em;
+}
+
+.nav__links {
+  display: none;
+  align-items: center;
+  gap: var(--space-l);
+}
+
+.nav__cta {
+  display: none;
+}
+
+.nav__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+@media (min-width: 768px) {
+  .nav__links {
+    display: flex;
+  }
+
+  .nav__cta {
+    display: inline-flex;
+  }
+
+  .nav__toggle {
+    display: none;
+  }
+}
+
+/* Mobile menu panel — collapsed by default, expanded via .is-open (required hook) */
+@media (max-width: 767px) {
+  .nav__links {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    max-height: 0;
+    overflow: hidden;
+    /* max-height alone still leaves the links in the tab order while the menu
+       is collapsed; visibility takes them out of it. */
+    visibility: hidden;
+    transition: max-height var(--dur) var(--ease), visibility var(--dur) var(--ease);
+  }
+
+  #nav.is-open .nav__links {
+    max-height: 24rem;
+    visibility: visible;
+  }
+
+  .nav__cta {
+    display: none;
+  }
+
+  #nav.is-open .nav__cta {
+    display: inline-flex;
+    margin: var(--space-m);
+  }
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--space-2xl);
+}
+
+/* Cap the copy column, not the block. Capping .hero__content itself fights
+   .container's `margin-inline: auto`, which centres the 640px box in the
+   viewport and pushes the hero copy out of line with every other section. */
+.hero__eyebrow,
+.hero__heading,
+.hero__actions {
+  max-width: 640px;
+}
+
+.hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  margin-block-start: var(--space-l);
+}
+
+@media (min-width: 480px) {
+  .hero__actions {
+    flex-direction: row;
+  }
+}
+
+/* ---------- Process timeline layout ---------- */
+
+.process {
+  position: relative;
+}
+
+.process__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-l);
+}
+
+@media (min-width: 768px) {
+  .process__list {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-m);
+  }
+}
+
+/* ---------- Footer ---------- */
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-m);
+  padding-block: var(--space-l);
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-m);
+}
+
+@media (min-width: 768px) {
+  .footer__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+/* ---------- About section layout ---------- */
+
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-l);
+  align-items: center;
+}
+
+.about__visual {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .about__grid {
+    grid-template-columns: 5fr 4fr;
+    gap: var(--space-xl);
+  }
+
+  .about__visual {
+    display: block;
+  }
+}
+
+/* ---------- Contact section layout ---------- */
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-l);
+}
+
+@media (min-width: 768px) {
+  .contact__grid {
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-xl);
+  }
+}
