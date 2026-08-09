@@ -43,11 +43,14 @@ src/
     palette.js        scene hexes, mirrored from the design palette
   ui/                 nav, scroll reveal, form validation, smooth scroll
   styles/             tokens → reset → base → layout → components → sections → utilities
-public/               favicon, robots.txt — copied verbatim to dist/
+public/               favicon, robots.txt, the two illustration plates
+                      (about.svg, process-elevation.svg) — copied verbatim to dist/
 docs/
   BRIEF.md            Source of truth: facts, scope, quality bar
   CONTRACTS.md        Frozen interfaces between the layers
-  DESIGN.md           Design spec, palette, type scale, copy deck, class contract
+  DESIGN.md           Design spec, palette, type scale, copy deck, class contract,
+                      illustration system
+  CONTENT.md          Alt text, copy audit, metadata review
 scripts/verify.mjs    Executable quality bar
 ```
 
@@ -81,15 +84,10 @@ Nothing on this site claims a fact that wasn't provided. No invented founding
 year, project count, certifications, testimonials, or awards. Placeholders are
 explicit — see `docs/DESIGN.md` §Copy deck → *Placeholder flags*:
 
-1. **The About photo.** `public/about.svg` is a placeholder illustration drawn
-   in the brand palette — it is not a photograph of anything. Replace it with a
-   real job-site or completed-project photo: portrait **4:5**, 800×1000
-   minimum (1600×2000 for retina), under ~250 KB. Update the `src` and rewrite
-   the `alt` text in `index.html` to describe the actual photo.
-2. Map embed or directions link for the contact section
+- Map embed or directions link for the contact section — the only one left.
 
-No stock photography is hotlinked anywhere, and no placeholder is presented as
-a real project.
+No photography is used anywhere on the site — illustration is the permanent art
+direction (see `docs/DESIGN.md` §Illustration system).
 
 > The `#projects` gallery section was removed at the client's request. Its
 > markup, styles, and copy deck entries are gone; `docs/DESIGN.md` still
@@ -100,7 +98,6 @@ a real project.
 - [ ] Replace the canonical URL and `og:url` with the real domain
 - [ ] Add an OG share image (1200×630) and point `og:image` at it
 - [ ] Update `public/robots.txt` sitemap host
-- [ ] Drop in real project photography
 - [ ] Decide how the contact form should deliver (see below)
 
 ### Contact form

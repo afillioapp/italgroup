@@ -59,9 +59,14 @@ export function initForm() {
 
   function setStatus(message, state) {
     if (!status) return;
-    status.textContent = message;
+    // Reveal before writing. `.form__status` is `display: none` until it carries
+    // a `data-state`, and text written into a display:none live region is not in
+    // the accessibility tree, so the announcement is lost. Setting the attribute
+    // first means the textContent mutation lands on a region that is already
+    // visible and live.
     if (state) status.setAttribute('data-state', state);
-    else status.removeAttribute('data-state');
+    status.textContent = message;
+    if (!state) status.removeAttribute('data-state');
   }
 
   // Validate on blur, but once a field is already flagged, re-check as the

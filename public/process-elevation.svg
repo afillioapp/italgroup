@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 280" width="1600" height="280" role="presentation" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="pe-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0v40" fill="none" stroke="#2B2E33" stroke-width="1" stroke-opacity=".45"/>
+    </pattern>
+    <linearGradient id="pe-edge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1B1D21" stop-opacity="1"/>
+      <stop offset="7%" stop-color="#1B1D21" stop-opacity="0"/>
+      <stop offset="93%" stop-color="#1B1D21" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#1B1D21" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="280" fill="#1B1D21"/>
+  <rect width="1600" height="280" fill="url(#pe-grid)"/>
+
+  <!-- Bay 1 (0-400) — scope: bare ground, setback line, two survey stakes -->
+  <path fill="none" stroke="#2B2E33" stroke-width="3" stroke-dasharray="12 12" d="M40 160H360"/>
+  <path fill="none" stroke="#2C2E33" stroke-width="5" stroke-linecap="square" d="M100 240V180M300 240V180"/>
+  <!-- Brass, ration 1 of 2: the datum origin -->
+  <path fill="none" stroke="#C9A24B" stroke-width="5" stroke-linecap="square" d="M200 240V200"/>
+
+  <!-- Bay 2 (400-800) — plan and permits: footings set, columns rising -->
+  <g fill="#2C2E33">
+    <rect x="440" y="232" width="40" height="8"/>
+    <rect x="560" y="232" width="40" height="8"/>
+    <rect x="680" y="232" width="40" height="8"/>
+  </g>
+  <path fill="none" stroke="#3B4854" stroke-width="9" stroke-linecap="square" d="M460 240V140M580 240V100M700 240V160"/>
+  <path fill="none" stroke="#454F5A" stroke-width="5" stroke-linecap="square" d="M460 140H580"/>
+
+  <!-- Bay 3 (800-1200) — build: full frame, braced -->
+  <path fill="none" stroke="#3B4854" stroke-width="9" stroke-linecap="square" d="M840 240V80M940 240V80M1040 240V80M1140 240V80"/>
+  <path fill="none" stroke="#454F5A" stroke-width="9" stroke-linecap="square" d="M840 80H1140M840 160H1140"/>
+  <path fill="none" stroke="#2C2E33" stroke-width="5" stroke-linecap="square" d="M840 160L940 80M1040 240L1140 160"/>
+
+  <!-- Bay 4 (1200-1600) — close-out: frame infilled, roof datum struck -->
+  <path fill="none" stroke="#3B4854" stroke-width="9" stroke-linecap="square" d="M1240 240V80M1340 240V80M1440 240V80M1540 240V80"/>
+  <path fill="none" stroke="#454F5A" stroke-width="9" stroke-linecap="square" d="M1240 160H1540"/>
+  <path fill="none" stroke="#2C2E33" stroke-width="3" stroke-opacity=".55" d="M1240 200L1360 80M1240 240L1400 80M1300 240L1460 80M1360 240L1520 80M1420 240L1540 120M1480 240L1540 180"/>
+  <!-- Brass, ration 2 of 2: the completed roof datum -->
+  <path fill="none" stroke="#C9A24B" stroke-width="10" stroke-linecap="square" d="M1240 80H1540"/>
+
+  <!-- Continuous ground line: one site, four stages -->
+  <path fill="none" stroke="#2B2E33" stroke-width="3" d="M0 240H1600"/>
+
+  <rect width="1600" height="280" fill="url(#pe-edge)"/>
+</svg>

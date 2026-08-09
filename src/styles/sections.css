@@ -5,7 +5,11 @@
 
 /* ---------- Section background rhythm ---------- */
 
-#hero {
+/* Class, not `#hero`: an ID here scores 1-0-0 and silently out-ranks the
+   `[data-webgl="off"] .hero` fallback hook (0-2-0) further down this file. The
+   `background` shorthand resets `background-image`, so the ID version wiped the
+   fallback's four gradient layers and left a flat graphite box. */
+.hero {
   background: var(--color-bg);
 }
 
@@ -14,31 +18,48 @@
   background: var(--color-bg);
 }
 
+/*
+ * Tinted sections used to be flat surface slabs with a hard hairline top and
+ * bottom. A 3% light wash falling from the top edge gives each one a direction
+ * — light from above, same as the WebGL key light — so the boundary reads as a
+ * change of plane rather than a change of paint.
+ */
 #process,
 #contact {
-  background: var(--color-surface);
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-text) 3%, transparent) 0%,
+      transparent 260px
+    ),
+    var(--color-surface);
   border-block: 1px solid var(--color-border);
 }
 
 .footer {
-  background: var(--color-bg);
+  background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-accent) 5%, transparent) 0%,
+      transparent 140px
+    ),
+    var(--color-bg);
   border-top: 1px solid var(--color-border);
 }
 
 /* ---------- Hero content ---------- */
 
+/* Base eyebrow styling (incl. the brass drafting tick) lives in layout.css and
+   is shared with .section__eyebrow; only the spacing differs here. */
 .hero__eyebrow {
-  display: block;
-  font-family: var(--font-display);
-  font-size: var(--step--1);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-accent);
   margin-block-end: var(--space-m);
 }
 
 .hero__heading {
+  /* --step-4 topped out at 56px, which a full-viewport WebGL scene simply ate.
+     --step-5 runs 44px → 80px and lets the headline hold the frame. */
+  font-size: var(--step-5);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--tracking-display);
   color: var(--color-text);
   margin-block-end: var(--space-m);
 }
@@ -46,7 +67,38 @@
 .hero__lede {
   font-size: var(--step-1);
   color: var(--color-text-muted);
-  max-width: 52ch;
+}
+
+/*
+ * Hero scrim. The copy sits directly over a live WebGL scene, so its contrast
+ * was only as good as whatever the scene happened to render behind it. This
+ * pins the floor: a graphite wash anchored to the reading edge guarantees the
+ * text keeps its 16.5:1 against near-solid --color-bg, plus a top band that
+ * keeps the sticky nav legible and a bottom fade that dissolves the hero into
+ * #services instead of cutting to it.
+ *
+ * Layer order inside .hero: canvas (0) → scrim (1) → content (2).
+ */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      105deg,
+      var(--color-bg) 0%,
+      color-mix(in srgb, var(--color-bg) 84%, transparent) 32%,
+      transparent 64%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-bg) 72%, transparent) 0%,
+      transparent 18%,
+      transparent 66%,
+      var(--color-bg) 100%
+    );
 }
 
 /*
@@ -89,11 +141,17 @@
     );
 }
 
+/* The fallback hero paints its own controlled gradients, so the live-scene
+   scrim would only mute them. Its job (the bottom fade) is done by ::after. */
+[data-webgl="off"] .hero::before {
+  background: none;
+}
+
 [data-webgl="off"] .hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   background: linear-gradient(
     to bottom,
@@ -119,7 +177,22 @@
   position: relative;
 }
 
+/*
+ * The spec always called for a continuous datum under the numerals, but the
+ * grid gap chopped each step's own border into four disconnected dashes. This
+ * pseudo bridges the gaps in border grey; the steps' brass borders then read as
+ * measured segments sitting on one continuous line — a drafting dimension run.
+ */
 @media (min-width: 768px) {
+  .process__list::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    height: 2px;
+    background: var(--color-border);
+  }
+
   .process-step {
     border-top-color: var(--color-accent);
   }
@@ -134,8 +207,8 @@
   overflow: hidden;
   border-radius: var(--radius);
   border: 1px solid var(--color-border);
-  /* Kept as the backdrop behind the image: it shows while the photo loads, and
-     fills any letterboxing if a supplied image doesn't match the ratio. */
+  /* Backdrop behind the illustration: fills any letterboxing from the 4:5 → 4:3
+     crop at narrow widths. */
   background:
     radial-gradient(
       ellipse 500px 400px at 30% 20%,
@@ -157,6 +230,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Dead centre, deliberately: the plate is drawn with every load-bearing line
+     inside a central 4:3 safe band, so the mobile 4:3 crop is lossless and the
+     desktop 4:5 box shows the full drawing. */
+  object-position: 50% 50%;
 }
 
 .about__body p + p {
@@ -174,17 +251,45 @@
   margin-block-end: var(--space-l);
 }
 
+/*
+ * The form had no container of its own, so seven bare rows sat loose beside a
+ * compact info block and the section looked lopsided. Giving the form a
+ * recessed --color-bg plate on the section's --color-surface ground balances
+ * the two columns and — more importantly — stops the fields, which are
+ * themselves --color-surface, from disappearing into the section background.
+ */
+#contact .form {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-m);
+}
+
+@media (min-width: 768px) {
+  #contact .form {
+    padding: var(--space-l);
+  }
+}
+
+@media (min-width: 1024px) {
+  #contact .form {
+    padding: var(--space-xl);
+  }
+}
+
 /* ---------- Footer ---------- */
 
 .footer__logo {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: var(--step-0);
+  font-size: var(--step-1);
+  letter-spacing: var(--tracking-tight);
 }
 
 .footer__link {
   color: var(--color-text-muted);
   font-size: var(--step--1);
+  transition: color var(--dur) var(--ease);
 }
 
 .footer__link:hover {

@@ -58,22 +58,55 @@
 /* ---------- Section rhythm ---------- */
 
 .section {
-  padding-block: var(--space-2xl);
+  padding-block: var(--section-pad);
 }
 
-.section__eyebrow {
+/*
+ * Pace, not uniformity. Every section previously carried an identical 84px
+ * band, so the page read as five stacked slabs. The first section after the
+ * hero gets extra air to let the hero exit, and the last one before the footer
+ * gets extra tail so the page doesn't stop abruptly.
+ */
+#services {
+  padding-block-start: calc(var(--section-pad) * 1.35);
+}
+
+#contact {
+  padding-block-end: calc(var(--section-pad) * 1.2);
+}
+
+.section__eyebrow,
+.hero__eyebrow {
   display: block;
   font-family: var(--font-display);
   font-size: var(--step--1);
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--color-accent);
   margin-block-end: var(--space-xs);
 }
 
+/*
+ * Drafting tick — a short brass rule leading into every eyebrow, echoing the
+ * datum marks in the illustration system. Decorative only (empty content
+ * string, so it is not announced), and it needs no markup change.
+ */
+.section__eyebrow::before,
+.hero__eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 1.5rem;
+  height: 2px;
+  background: var(--color-accent);
+  vertical-align: middle;
+  margin-inline-end: 0.625rem;
+  transform: translateY(-0.05em);
+}
+
+/* 44ch at 42px is a wall of heading. 24ch forces a proper 2-line stack. */
 .section__heading {
-  max-width: 44ch;
+  max-width: 24ch;
 }
 
 .section__intro {
@@ -221,7 +254,10 @@
 
 .hero {
   position: relative;
-  min-height: 100svh;
+  /* The nav is sticky, so it consumes flow height above the hero. A flat
+     100svh therefore made the page 68px taller than the viewport and forced a
+     pointless first scroll before anything moved. */
+  min-height: calc(100svh - var(--nav-height));
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -237,7 +273,8 @@
 
 .hero__content {
   position: relative;
-  z-index: 1;
+  /* Above both the canvas (0) and the scrim (1). */
+  z-index: 2;
   padding-block: var(--space-2xl);
 }
 
@@ -246,6 +283,7 @@
    viewport and pushes the hero copy out of line with every other section. */
 .hero__eyebrow,
 .hero__heading,
+.hero__lede,
 .hero__actions {
   max-width: 640px;
 }
@@ -269,6 +307,17 @@
   position: relative;
 }
 
+/*
+ * Process elevation plate — public/process-elevation.svg, viewBox 1600x280.
+ * Four 400-unit bays that sit directly over the four steps below, so the
+ * drawing and the list share one rhythm. Suppressed below 768px, where the
+ * steps become a vertical timeline and a 5.7:1 horizontal drawing has nothing
+ * to align to. Markup for this is specified in docs/DESIGN.md §Refinement spec.
+ */
+.process__plate {
+  display: none;
+}
+
 .process__list {
   display: grid;
   grid-template-columns: 1fr;
@@ -276,6 +325,18 @@
 }
 
 @media (min-width: 768px) {
+  .process__plate {
+    display: block;
+    margin: 0 0 var(--space-l);
+    aspect-ratio: 1600 / 280;
+  }
+
+  .process__plate-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
   .process__list {
     grid-template-columns: repeat(4, 1fr);
     gap: var(--space-m);
@@ -290,7 +351,7 @@
   align-items: center;
   text-align: center;
   gap: var(--space-m);
-  padding-block: var(--space-l);
+  padding-block: var(--space-xl);
 }
 
 .footer__links {
@@ -300,11 +361,41 @@
   gap: var(--space-m);
 }
 
+/*
+ * Four items on one 768px row left the footer as a cramped strip. A 2x2 grid
+ * gives it two readable tiers — identity + navigation on top, contact + legal
+ * beneath — with no markup change: all four are already direct children.
+ */
 @media (min-width: 768px) {
   .footer__inner {
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "logo links"
+      "contact legal";
+    align-items: center;
+    column-gap: var(--space-xl);
+    row-gap: var(--space-l);
     text-align: left;
+  }
+
+  .footer__logo {
+    grid-area: logo;
+  }
+
+  .footer__links {
+    grid-area: links;
+    justify-content: flex-end;
+    gap: var(--space-l);
+  }
+
+  .footer__contact {
+    grid-area: contact;
+  }
+
+  .footer__legal {
+    grid-area: legal;
+    text-align: right;
   }
 }
 
@@ -317,12 +408,14 @@
   align-items: center;
 }
 
-/* Shown at every width now that it carries a real image rather than a
-   decorative panel — but letterboxed on narrow screens, where a full 4:5
-   portrait would push the copy most of a screen down the page. */
+/* Shown at every width now that it carries a real illustration rather than a
+   decorative panel — but cropped on narrow screens, where a full 4:5 portrait
+   would push the copy most of a screen down the page. 4:3 rather than the old
+   3:2: the plate is drawn with all load-bearing geometry inside a central 4:3
+   safe band, so a 4:3 crop at object-position 50% 50% loses nothing. */
 .about__visual {
   display: block;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 4 / 3;
 }
 
 @media (min-width: 640px) {

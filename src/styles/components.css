@@ -38,10 +38,13 @@
   border-color: color-mix(in srgb, var(--color-accent) 88%, white);
 }
 
+/* --color-border is 1.36:1 on --color-bg. On a decorative divider that's fine;
+   as the only visible boundary of a button it fails WCAG 1.4.11 (3:1).
+   --color-border-strong is 3.56:1 on bg, 3.24:1 on surface. */
 .btn--secondary {
   background: transparent;
   color: var(--color-text);
-  border-color: var(--color-border);
+  border-color: var(--color-border-strong);
 }
 
 .btn--secondary:hover {
@@ -129,6 +132,8 @@
 /* ---------- Service cards ---------- */
 
 .service-card {
+  position: relative;
+  overflow: hidden;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
@@ -137,22 +142,76 @@
     transform var(--dur) var(--ease);
 }
 
+/* Bottom-heavier padding on wider screens: the card reads as a drawing plate
+   with a title block, not as a text box. */
+@media (min-width: 768px) {
+  .service-card {
+    padding: var(--space-l) var(--space-l) var(--space-xl);
+  }
+}
+
 .service-card:hover {
   border-color: var(--color-accent);
 }
 
+/* A brass rule that runs the top edge on hover — the card's border going from
+   grey to brass alone was too quiet to register as feedback. Under
+   prefers-reduced-motion the global duration override makes it snap, which is
+   the correct degradation for a state change. */
+.service-card::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-accent);
+  transition: width var(--dur) var(--ease);
+}
+
+.service-card:hover::before,
+.service-card:focus-within::before {
+  width: 100%;
+}
+
 .service-card__icon {
   /* Must not stay inline: the <svg> inside carries only a viewBox, so it sizes
-     to its containing block — an inline span leaves that as the whole card. */
+     to its containing block — an inline span leaves that as the whole card.
+     Now also a framed plate: the mark sits inside a drawing border on the
+     recessed --color-bg, so it reads as a drawing rather than a floating glyph. */
   display: inline-flex;
-  width: 40px;
-  height: 40px;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 9px;
   color: var(--color-accent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-accent) 7%, transparent),
+      transparent 70%
+    ),
+    var(--color-bg);
   margin-block-end: var(--space-m);
+  transition: border-color var(--dur) var(--ease);
+}
+
+/* The inline <svg> carries only a viewBox, so it must be told to fill the
+   plate's content box explicitly. */
+.service-card__icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.service-card:hover .service-card__icon {
+  border-color: var(--color-accent);
 }
 
 .service-card__title {
   font-size: var(--step-1);
+  letter-spacing: var(--tracking-tight);
   margin-block-end: var(--space-xs);
 }
 
@@ -168,25 +227,45 @@
   border-top: 2px solid var(--color-border);
 }
 
+/* Station mark — a brass square seated on the datum where each step begins.
+   Same device as the column feet in the illustration system. */
+.process-step::before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--color-accent);
+  inset-block-start: -5px;
+  inset-inline-start: 0;
+}
+
 .process-step__number {
   display: block;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: var(--step-1);
+  /* Was --step-1, the same size as a card title — the numerals are the section's
+     structure and should out-rank the step headings, not match them.
+     tabular-nums keeps 01–04 on identical widths across the row. */
+  font-size: var(--step-2);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
   color: var(--color-accent);
   margin-block-end: var(--space-s);
 }
 
 .process-step__title {
-  font-size: var(--step-0);
+  font-size: var(--step-1);
   font-weight: 700;
   font-family: var(--font-display);
-  margin-block-end: var(--space-2xs);
+  letter-spacing: var(--tracking-tight);
+  margin-block-end: var(--space-xs);
 }
 
 .process-step__body {
   color: var(--color-text-muted);
-  font-size: var(--step--1);
+  /* Was --step--1, i.e. 12.8px on a phone. This is prose, not a caption. */
+  font-size: var(--step-0);
 }
 
 @media (max-width: 767px) {
@@ -196,6 +275,11 @@
     border-top: none;
     border-left: 2px solid var(--color-border);
   }
+
+  .process-step::before {
+    inset-block-start: 0;
+    inset-inline-start: -5px;
+  }
 }
 
 /* ---------- Contact info block ---------- */
@@ -203,12 +287,14 @@
 .contact-info {
   display: flex;
   flex-direction: column;
+  align-content: start;
   gap: var(--space-l);
 }
 
 .contact-info__item {
   border-left: 2px solid var(--color-accent);
   padding-inline-start: var(--space-m);
+  padding-block: var(--space-2xs);
 }
 
 .contact-info__label {
@@ -248,24 +334,38 @@ a.contact-info__value:hover {
 .form__row {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xs);
+  gap: var(--space-xs);
+}
+
+/* Full-width brass bars are for the hero, not for a form. Above 480px the
+   submit button sizes to its label; below it, full width is the better target. */
+@media (min-width: 480px) {
+  .form > .btn {
+    align-self: flex-start;
+    margin-block-start: var(--space-2xs);
+  }
 }
 
 .form__label {
   font-size: var(--step--1);
   font-weight: 700;
+  letter-spacing: 0.02em;
   color: var(--color-text);
 }
 
 .form__input,
 .form__textarea {
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  /* --color-border was 1.24:1 against the field's own fill — below the 3:1
+     WCAG 1.4.11 floor for a control boundary, and effectively invisible now
+     that the form plate is --color-bg. --color-border-strong is 3.24:1. */
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius);
   padding: var(--space-s) var(--space-m);
   color: var(--color-text);
   font-size: var(--step-0);
-  transition: border-color var(--dur) var(--ease);
+  transition: border-color var(--dur) var(--ease),
+    background-color var(--dur) var(--ease);
 }
 
 .form__input::placeholder,

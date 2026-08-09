@@ -113,8 +113,17 @@
           <div class="grid grid--3">
             <article class="card service-card" data-reveal>
               <span class="service-card__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6" />
+                <svg
+                  viewBox="0 0 48 48"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="square"
+                  stroke-linejoin="miter"
+                  aria-hidden="true"
+                >
+                  <path d="M24 16V40" stroke-width="1" opacity=".5" />
+                  <path d="M12 12V40M36 12V40M12 12H36M12 20H36M12 28H36" stroke-width="1.8" />
+                  <path d="M6 40H42" stroke-width=".8" />
                 </svg>
               </span>
               <h3 class="service-card__title">Build</h3>
@@ -126,8 +135,23 @@
 
             <article class="card service-card" data-reveal>
               <span class="service-card__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M14.7 6.3a4 4 0 0 1-5 5L4 17v3h3l5.7-5.7a4 4 0 0 1 5-5l-2.5-2.5 2-2 2.5 2.5-2 2z" />
+                <svg
+                  viewBox="0 0 48 48"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="square"
+                  stroke-linejoin="miter"
+                  aria-hidden="true"
+                >
+                  <path d="M8 12H16V40H8Z" stroke-width="1" opacity=".55" />
+                  <path
+                    d="M8 20L16 12M8 28L16 20M8 36L16 28M8 40L12 36M12 40L16 36"
+                    stroke-width=".8"
+                    opacity=".35"
+                  />
+                  <path d="M16 8H40V40H16" stroke-width="1.8" />
+                  <path d="M16 24H40" stroke-width="1" />
+                  <path d="M4 40H44" stroke-width=".8" />
                 </svg>
               </span>
               <h3 class="service-card__title">Renovate</h3>
@@ -139,8 +163,17 @@
 
             <article class="card service-card" data-reveal>
               <span class="service-card__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M9 3h6v4H9zM5 7h14v14H5zM9 12h6M9 16h6" />
+                <svg
+                  viewBox="0 0 48 48"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="square"
+                  stroke-linejoin="miter"
+                  aria-hidden="true"
+                >
+                  <path d="M8 8H40V40H8Z" stroke-width="1" />
+                  <path d="M8 16H40" stroke-width="1" opacity=".55" />
+                  <path d="M14 22H26M14 28H34M14 34H22" stroke-width="2" />
                 </svg>
               </span>
               <h3 class="service-card__title">Manage</h3>
@@ -162,6 +195,19 @@
               From first call to final walkthrough
             </h2>
           </div>
+
+          <figure class="process__plate" data-reveal>
+            <img
+              class="process__plate-img"
+              src="./process-elevation.svg"
+              width="1600"
+              height="280"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
 
           <ol class="process__list">
             <li class="process-step" data-reveal>
@@ -219,16 +265,13 @@
                 on the days we say we will. That's the whole pitch.
               </p>
             </div>
-            <!-- PLACEHOLDER: client to supply a job-site or completed-project photo.
-                 Portrait 4:5, 800x1000 minimum (1600x2000 for retina), under ~250KB.
-                 Swap the src below and rewrite the alt to describe the real photo. -->
             <figure class="about__visual" data-reveal>
               <img
                 class="about__visual-img"
                 src="./about.svg"
                 width="800"
                 height="1000"
-                alt="Illustration of a steel building frame under construction, columns and floor beams seated on a ground line."
+                alt="A steel building frame under construction, an elevation drawing with columns and floor beams seated on a ground line."
                 loading="lazy"
                 decoding="async"
               />

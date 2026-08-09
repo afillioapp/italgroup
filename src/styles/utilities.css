@@ -30,8 +30,16 @@
  */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  transform: translateY(20px);
+  /* 240ms was the hover duration doing double duty; an entrance wants to settle,
+     not pop. Opacity leads slightly so the element is legible before it lands. */
+  transition: opacity calc(var(--dur-reveal) * 0.85) var(--ease),
+    transform var(--dur-reveal) var(--ease);
+}
+
+/* Scoped so revealed elements stop holding a compositor layer for the rest of
+   the session — an unscoped will-change never releases. */
+[data-reveal]:not([data-reveal="in"]) {
   will-change: opacity, transform;
 }
 

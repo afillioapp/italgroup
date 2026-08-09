@@ -14,11 +14,20 @@
   --color-accent: #c9a24b;
   --color-accent-contrast: #14151a;
   --color-border: #2b2e33;
+  /* Decorative hairlines (--color-border) sit at 1.36:1 on --color-bg, which is
+     fine for dividers but fails WCAG 1.4.11 (3:1) for the boundary of an actual
+     control. Inputs, ghost buttons and the nav toggle use this stronger grey:
+     3.56:1 on --color-bg, 3.24:1 on --color-surface. */
+  --color-border-strong: #676d76;
   --color-error: #e5646b;
 
   /* ---------- Type ---------- */
-  --font-display: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --font-body: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  /* system-ui first so Android/Linux get Roboto/Cantarell rather than falling
+     all the way through to Arial. No external font requests, ever. */
+  --font-display: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Helvetica, Arial, sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Helvetica, Arial, sans-serif;
 
   /* Fluid type scale — clamp(min @360px, fluid, max @1440px) */
   --step--1: clamp(0.8rem, 0.77rem + 0.16vw, 0.9rem);
@@ -27,10 +36,20 @@
   --step-2: clamp(1.56rem, 1.42rem + 0.72vw, 2rem);
   --step-3: clamp(1.95rem, 1.72rem + 1.16vw, 2.65rem);
   --step-4: clamp(2.44rem, 2.06rem + 1.88vw, 3.5rem);
+  /* Hero-only display step. 44px @360, ~75px @1440, capped 80px. --step-4 (max
+     56px) was too polite to hold its own against a full-viewport WebGL scene. */
+  --step-5: clamp(2.75rem, 2.1rem + 2.9vw, 5rem);
 
   --line-height-tight: 1.1;
+  --line-height-display: 1.02;
   --line-height-heading: 1.2;
   --line-height-body: 1.6;
+
+  /* Tracking — the display/body distinction is carried by weight and tracking,
+     not by a second typeface. */
+  --tracking-display: -0.03em;
+  --tracking-tight: -0.01em;
+  --tracking-eyebrow: 0.12em;
 
   /* ---------- Space ---------- */
   --space-2xs: 0.25rem;
@@ -46,8 +65,14 @@
   --shadow: 0 12px 32px -12px rgb(0 0 0 / 0.5);
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --dur: 240ms;
+  /* Entrance reveals want a longer settle than a hover state does; one shared
+     240ms made scroll reveals read as a pop rather than a settle. */
+  --dur-reveal: 520ms;
 
   /* ---------- Layout ---------- */
   --container-max: 1200px;
   --nav-height: 68px;
+  /* Fluid section rhythm. The old flat 84px was heavy at 360px and thin at
+     1440px, which is why every section read as the same slab. 56px → 112px. */
+  --section-pad: clamp(3.5rem, 7vw, 7rem);
 }
